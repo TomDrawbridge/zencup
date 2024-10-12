@@ -10,12 +10,13 @@ declare global {
   interface Window {
     Ecwid: any;
     xProductBrowser: any;
-    ec: any; // Add this line to declare the ec object
+    ec: any;
   }
 }
 
 export default function EcwidStore({ storeId, className }: EcwidStoreProps) {
   const [isLoading, setIsLoading] = useState(true)
+  const [isEcwidReady, setIsEcwidReady] = useState(false)
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -31,7 +32,6 @@ export default function EcwidStore({ storeId, className }: EcwidStoreProps) {
           storeId: storeId,
         });
 
-        // Safely initialize the ec object
         if (typeof window.ec === 'undefined') {
           window.ec = {};
         }
@@ -42,11 +42,8 @@ export default function EcwidStore({ storeId, className }: EcwidStoreProps) {
         window.ec.config.storefrontUrls.cleanUrls = true;
         window.ec.config.baseUrl = '/store';
 
-        window.xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list",`id=my-store-${storeId}`);
-
-        // Add an event listener for when the store is fully loaded
         window.Ecwid.OnAPILoaded.add(() => {
-          setIsLoading(false)
+          setIsEcwidReady(true)
         })
       }
     }
@@ -58,6 +55,13 @@ export default function EcwidStore({ storeId, className }: EcwidStoreProps) {
     }
   }, [storeId])
 
+  useEffect(() => {
+    if (isEcwidReady) {
+      window.xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list",`id=my-store-${storeId}`);
+      setIsLoading(false)
+    }
+  }, [isEcwidReady, storeId])
+
   return (
     <div className={`relative min-h-screen ${className}`}>
       {isLoading && (
@@ -65,7 +69,9 @@ export default function EcwidStore({ storeId, className }: EcwidStoreProps) {
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
       )}
-      <div id={`my-store-${storeId}`} className={isLoading ? 'invisible' : 'visible'}></div>
+      {isEcwidReady && (
+        <div id={`my-store-${storeId}`} className={isLoading ? 'invisible' : 'visible'}></div>
+      )}
     </div>
   )
 }
