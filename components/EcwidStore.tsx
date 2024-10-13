@@ -1,62 +1,78 @@
+'use client'
+
 import React, { useEffect } from 'react'
 
 interface EcwidStoreProps {
-  storeId: string | number;
-  className?: string;
-  baseUrl?: string;
+  storeId: string | number
+  baseUrl?: string
 }
 
-const EcwidStore: React.FC<EcwidStoreProps> = ({ storeId = 13433173, className = '', baseUrl = '/store' }) => {
-  useEffect(() => {
-    let ecwidLoaded = false;
-
-    function load_ecwid() {
-      if (typeof window.Ecwid !== 'undefined') {
-        window.Ecwid.OnAPILoaded.add(function () {
-          if (!ecwidLoaded) {
-            ecwidLoaded = true;
-            window.xProductBrowser("categoriesPerRow=3", "views=grid(20,3) list(60) table(60)", "categoryView=grid", "searchView=list", "id=ecStoreProductBrowser");
-          }
-        });
+const load_ecwid = () => {
+  if (typeof window.Ecwid !== 'undefined') {
+    window.Ecwid.OnAPILoaded.add(function () {
+      let ecwidLoaded = false;
+      if (!ecwidLoaded) {
+        ecwidLoaded = true;
+        const storeDiv = document.getElementById('ecStoreProductBrowser');
+        if (storeDiv) {
+          window.xProductBrowser(
+            "categoriesPerRow=3",
+            "views=grid(20,3) list(60) table(60)",
+            "categoryView=grid",
+            "searchView=list",
+            "id=ecStoreProductBrowser"
+          );
+        }
       }
-    }
+    });
+  }
+};
 
-    window.ec = window.ec || {};
-    window.ec.config = window.ec.config || {};
-    window.ec.config.storefrontUrls = window.ec.config.storefrontUrls || {};
-    window.ec.config.storefrontUrls.cleanUrls = true;
-    window.ec.config.storefrontUrls.queryBasedCleanUrls = false;
-    window.ec.config.baseUrl = baseUrl; // Add this line to set the base URL
+const EcwidStore: React.FC<EcwidStoreProps> = ({ storeId = "109087793", baseUrl = '/store' }) => {
+  useEffect(() => {
+    let ecwidLoaded = false
 
-    window.ecwid_script_defer = true;
-    window.ecwid_dynamic_widgets = true;
+    window.ec = window.ec || {}
+    window.ec.config = window.ec.config || {}
+    window.ec.config.storefrontUrls = window.ec.config.storefrontUrls || {}
+    window.ec.config.storefrontUrls.cleanUrls = true
+    window.ec.config.storefrontUrls.queryBasedCleanUrls = false
+    window.ec.config.baseUrl = baseUrl
+
+    window.ecwid_script_defer = true
+    window.ecwid_dynamic_widgets = true
 
     if (!document.getElementById('ecwid-script')) {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://app.ecwid.com/script.js?' + storeId + '&data_platform=nextjs';
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src = `https://app.ecwid.com/script.js?${storeId}&data_platform=nextjs`
       script.id = 'ecwid-script'
       script.onload = load_ecwid
-      document.body.appendChild(script);
+      document.body.appendChild(script)
     } else {
       load_ecwid()
     }
+
+    return () => {
+      // Cleanup function
+      if (window.Ecwid && window.Ecwid.OnAPILoaded && typeof window.Ecwid.OnAPILoaded.remove === 'function') {
+        window.Ecwid.OnAPILoaded.remove(load_ecwid);
+      }
+    }
   }, [storeId, baseUrl])
 
-  return (
-    <div id="ecStoreProductBrowser" className={className}></div>
-  )
+  // This component doesn't render anything visible
+  return null
 }
 
 export default EcwidStore
 
-// Add these type declarations at the end of the file or in a separate .d.ts file
 declare global {
   interface Window {
-    Ecwid: any;
-    xProductBrowser: any;
-    ec: any;
-    ecwid_script_defer: boolean;
-    ecwid_dynamic_widgets: boolean;
+    Ecwid: any
+    xProductBrowser: any
+    ec: any
+    ecwid_script_defer: boolean
+    ecwid_dynamic_widgets: boolean
   }
 }
