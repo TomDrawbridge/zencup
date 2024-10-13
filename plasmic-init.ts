@@ -38,8 +38,6 @@ export const PLASMIC = initPlasmicLoader({
 // http://localhost:3000/plasmic-host).  See
 // https://docs.plasmic.app/learn/app-hosting/#set-a-plasmic-project-to-use-your-app-host
 
-// Register all components from plasmic-chakra-ui
-registerAll(PLASMIC);
 
 
 PLASMIC.registerGlobalContext(ScrollProvider, {
