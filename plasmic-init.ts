@@ -5,12 +5,7 @@ require('dotenv').config()
 
 
 import { ScrollProvider } from "./components/ScrollContext";
-import { registerAll } from '@plasmicpkgs/plasmic-chakra-ui';
-import { Parallax } from "./components/ParallaxText";
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
-import { CaisyRichText } from "./components/Caisy/CaisyRichText";
-import { registerReveal	 } from "./components/react-awesome-reveal";
-import { registerSlider } from "./components/plasmic-keen-slider";
 
 import NextScript from "./components/NextScript";
 import { FormUpload } from "./components/uploadCare";
@@ -33,7 +28,7 @@ export const PLASMIC = initPlasmicLoader({
   // For development, you can set preview to true, which will use the unpublished
   // project, allowing you to see your designs without publishing.  Please
   // only use this for development, as this is significantly slower.
-   preview: true,
+   preview: isDevelopment,
 });
 
 // You can register any code components that you want to use here; see
@@ -46,8 +41,6 @@ export const PLASMIC = initPlasmicLoader({
 // Register all components from plasmic-chakra-ui
 registerAll(PLASMIC);
 
-registerReveal(PLASMIC);
-registerSlider(PLASMIC);
 
 PLASMIC.registerGlobalContext(ScrollProvider, {
   name: "ScrollProvider",
@@ -56,96 +49,25 @@ PLASMIC.registerGlobalContext(ScrollProvider, {
 });
 
 
-import WhatsAppWidgetComponent from "./components/whats-app-widget";
+import EcwidStoreDiv from "./components/EcwidStoreDiv";
 
-PLASMIC.registerComponent(WhatsAppWidgetComponent, {
-  name: "WhatsAppWidgetComponent",
-  props: {},
+PLASMIC.registerComponent(EcwidStoreDiv, {
+  name: "Ecwid Store Div",
+  props: {
+className: "string",
+},
 });
-
-
 
 import EcwidStore from "./components/EcwidStore";
 
 PLASMIC.registerComponent(EcwidStore, {
   name: "Ecwid Store",
   props: {
-storeId: "string",
-initialPage: "string",
-initialId: "string",
 className: "string",
-
+storeId: "string",
 },
 });
 
-
-PLASMIC.registerComponent(FormUpload, {
-  name: "FormUpload",
-  props: {},
-  importPath: "@pages/plasmic",
-  importName: "FormUpload"
-})
-
-PLASMIC.registerComponent(Parallax, {
-  name: "Parallax",
-  props: {
-    children: "slot",
-className: 'string',
-    from: "number", 
-    to: "number",
-    stiffness: "number",
-    damping: "number",
-  },
-  providesData: true,
-});
-
-PLASMIC.registerComponent(NextScript, {
-  name: "NextScript",
-  props: {
-    src: "string",
-  },
-});
-
-
-import FeatherIcon from "./components/FeatherIcon";
-
-PLASMIC.registerComponent(FeatherIcon, {
-  name: "FeatherIcon",
-  props: {
-    name: 'string',
-    color: 'string',  // use string type for color
-    size: 'string',
-    strokeWidth: 'number',
-  },
-});
-
-import ReactMarkdownComponent from "./components/ReactMarkdown";
-
-PLASMIC.registerComponent(ReactMarkdownComponent, {
-  name: "ReactMarkdown",
-  props: {
-    children: {
-      type: "slot",
-    },
-  },
-});
-
-import CustomHead from './components/CustomHead';
-
-PLASMIC.registerComponent(CustomHead, {
-  name: "Head Inject",
-  props: {
-    mycodehere: {
-displayName: "Other Code",
-      type: "code",
-      lang: "html",
-    },
-    measurementId: {
-displayName: "Google Analytics ID",
-      type: "string",
-    },
-  },
-});
 
 import FramerMotionComponent from './components/FramerMotionComponent'; 
 
