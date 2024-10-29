@@ -10,7 +10,7 @@ import { Parallax } from "./components/ParallaxText";
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 import { CaisyRichText } from "./components/Caisy/CaisyRichText";
 import { registerReveal	 } from "./components/react-awesome-reveal";
-import { registerSlider } from "./components/plasmic-keen-slider";
+
 
 import NextScript from "./components/NextScript";
 import { FormUpload } from "./components/uploadCare";
@@ -47,7 +47,7 @@ export const PLASMIC = initPlasmicLoader({
 registerAll(PLASMIC);
 
 registerReveal(PLASMIC);
-registerSlider(PLASMIC);
+
 
 PLASMIC.registerGlobalContext(ScrollProvider, {
   name: "ScrollProvider",
@@ -65,18 +65,15 @@ PLASMIC.registerComponent(WhatsAppWidgetComponent, {
 
 
 
-import EcwidStore from "./components/EcwidStore";
+import EcwidStoreDiv from "./components/EcwidStoreDiv";
 
-PLASMIC.registerComponent(EcwidStore, {
-  name: "Ecwid Store",
+PLASMIC.registerComponent(EcwidStoreDiv, {
+  name: "Ecwid Store Div",
   props: {
-storeId: "string",
-initialPage: "string",
-initialId: "string",
 className: "string",
-
 },
 });
+
 
 
 PLASMIC.registerComponent(FormUpload, {
