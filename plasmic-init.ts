@@ -5,12 +5,13 @@ require('dotenv').config()
 
 
 import { ScrollProvider } from "./components/ScrollContext";
-import { registerAll } from '@plasmicpkgs/plasmic-chakra-ui';
-import { Parallax } from "./components/ParallaxText";
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
+<<<<<<< HEAD
 import { CaisyRichText } from "./components/Caisy/CaisyRichText";
 import { registerReveal	 } from "./components/react-awesome-reveal";
 
+=======
+>>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
 
 import NextScript from "./components/NextScript";
 import { FormUpload } from "./components/uploadCare";
@@ -33,7 +34,7 @@ export const PLASMIC = initPlasmicLoader({
   // For development, you can set preview to true, which will use the unpublished
   // project, allowing you to see your designs without publishing.  Please
   // only use this for development, as this is significantly slower.
-   preview: true,
+   preview: isDevelopment,
 });
 
 // You can register any code components that you want to use here; see
@@ -43,26 +44,18 @@ export const PLASMIC = initPlasmicLoader({
 // http://localhost:3000/plasmic-host).  See
 // https://docs.plasmic.app/learn/app-hosting/#set-a-plasmic-project-to-use-your-app-host
 
-// Register all components from plasmic-chakra-ui
-registerAll(PLASMIC);
 
+<<<<<<< HEAD
 registerReveal(PLASMIC);
 
+=======
+>>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
 
 PLASMIC.registerGlobalContext(ScrollProvider, {
   name: "ScrollProvider",
   providesData: true,
   props: {},
 });
-
-
-import WhatsAppWidgetComponent from "./components/whats-app-widget";
-
-PLASMIC.registerComponent(WhatsAppWidgetComponent, {
-  name: "WhatsAppWidgetComponent",
-  props: {},
-});
-
 
 
 import EcwidStoreDiv from "./components/EcwidStoreDiv";
@@ -74,7 +67,27 @@ className: "string",
 },
 });
 
+<<<<<<< HEAD
 
+
+import EcwidStoreDiv from "./components/EcwidStoreDiv";
+=======
+import EcwidStore from "./components/EcwidStore";
+>>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
+
+PLASMIC.registerComponent(EcwidStoreDiv, {
+  name: "Ecwid Store Div",
+  props: {
+className: "string",
+<<<<<<< HEAD
+=======
+storeId: "string",
+>>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
+},
+});
+
+
+<<<<<<< HEAD
 
 PLASMIC.registerComponent(FormUpload, {
   name: "FormUpload",
@@ -144,6 +157,8 @@ displayName: "Google Analytics ID",
   },
 });
 
+=======
+>>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
 import FramerMotionComponent from './components/FramerMotionComponent'; 
 
 PLASMIC.registerComponent(FramerMotionComponent, {
