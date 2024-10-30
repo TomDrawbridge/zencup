@@ -1,85 +1,21 @@
 'use client'
 
-<<<<<<< HEAD
 import React, { useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/router'
-=======
-import React, { useEffect } from 'react'
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
 
 interface EcwidStoreProps {
   storeId: string | number
   baseUrl?: string
 }
 
-const load_ecwid = () => {
-  if (typeof window.Ecwid !== 'undefined') {
-    window.Ecwid.OnAPILoaded.add(function () {
-      let ecwidLoaded = false;
-      if (!ecwidLoaded) {
-        ecwidLoaded = true;
-        const storeDiv = document.getElementById('ecStoreProductBrowser');
-        if (storeDiv) {
-          window.xProductBrowser(
-            "categoriesPerRow=3",
-            "views=grid(20,3) list(60) table(60)",
-            "categoryView=grid",
-            "searchView=list",
-            "id=ecStoreProductBrowser"
-          );
-        }
-      }
-    });
-  }
-};
-
-const EcwidStore: React.FC<EcwidStoreProps> = ({ storeId = "109087793", baseUrl = '/store' }) => {
-  useEffect(() => {
-    let ecwidLoaded = false
-
-    window.ec = window.ec || {}
-    window.ec.config = window.ec.config || {}
-    window.ec.config.storefrontUrls = window.ec.config.storefrontUrls || {}
-    window.ec.config.storefrontUrls.cleanUrls = true
-    window.ec.config.storefrontUrls.queryBasedCleanUrls = false
-    window.ec.config.baseUrl = baseUrl
-
-    window.ecwid_script_defer = true
-    window.ecwid_dynamic_widgets = true
-
-    if (!document.getElementById('ecwid-script')) {
-      const script = document.createElement('script')
-      script.type = 'text/javascript'
-      script.src = `https://app.ecwid.com/script.js?${storeId}&data_platform=nextjs`
-      script.id = 'ecwid-script'
-      script.onload = load_ecwid
-      document.body.appendChild(script)
-    } else {
-      load_ecwid()
-    }
-
-    return () => {
-      // Cleanup function
-      if (window.Ecwid && window.Ecwid.OnAPILoaded && typeof window.Ecwid.OnAPILoaded.remove === 'function') {
-        window.Ecwid.OnAPILoaded.remove(load_ecwid);
-      }
-    }
-  }, [storeId, baseUrl])
-
-  // This component doesn't render anything visible
-  return null
-}
-
-export default EcwidStore
-
 declare global {
   interface Window {
     Ecwid: any
-<<<<<<< HEAD
     ec: any
     ecwid_script_defer: boolean
     ecwid_dynamic_widgets: boolean
     _xnext_initialization_scripts: any[]
+    xProductBrowser: any
   }
 }
 
@@ -111,7 +47,6 @@ export default function EcwidStore({ storeId = "109087793", baseUrl = '/store' }
 
     window.Ecwid.init();
 
-    // Set up route change handler
     handleRouteChangeRef.current = (url: string) => {
       if (typeof window.Ecwid === 'undefined') return;
 
@@ -134,10 +69,7 @@ export default function EcwidStore({ storeId = "109087793", baseUrl = '/store' }
     };
 
     router.events.on('routeChangeComplete', handleRouteChangeRef.current);
-
-    // Initial page load
     handleRouteChangeRef.current(router.asPath);
-
     initialized.current = true;
   }, [router]);
 
@@ -175,12 +107,10 @@ export default function EcwidStore({ storeId = "109087793", baseUrl = '/store' }
       if (handleRouteChangeRef.current) {
         router.events.off('routeChangeComplete', handleRouteChangeRef.current);
       }
-      // Reset initialization flag when component unmounts
       initialized.current = false;
     };
   }, [baseUrl, loadEcwidScript, router.events]);
 
-  // Check for store div and initialize on route change
   useEffect(() => {
     const checkAndInitialize = () => {
       if (document.getElementById('ecStoreProductBrowser') && !initialized.current) {
@@ -197,11 +127,3 @@ export default function EcwidStore({ storeId = "109087793", baseUrl = '/store' }
 
   return null;
 }
-=======
-    xProductBrowser: any
-    ec: any
-    ecwid_script_defer: boolean
-    ecwid_dynamic_widgets: boolean
-  }
-}
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10

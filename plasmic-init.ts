@@ -1,22 +1,16 @@
 /** @format */
-
 import 'dotenv/config'
 require('dotenv').config() 
 
-
 import { ScrollProvider } from "./components/ScrollContext";
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
-<<<<<<< HEAD
-import { CaisyRichText } from "./components/Caisy/CaisyRichText";
-import { registerReveal	 } from "./components/react-awesome-reveal";
-
-=======
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
-
+import { registerReveal } from "./components/react-awesome-reveal";
 import NextScript from "./components/NextScript";
-import { FormUpload } from "./components/uploadCare";
-
-
+import EcwidStoreDiv from "./components/EcwidStoreDiv";
+import EcwidStore from "./components/EcwidStore";
+import FeatherIcon from "./components/FeatherIcon";
+import CustomHead from './components/CustomHead';
+import FramerMotionComponent from './components/FramerMotionComponent';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 console.log("Plasmic preview mode:", isDevelopment);
@@ -28,87 +22,29 @@ export const PLASMIC = initPlasmicLoader({
       token: process.env.NEXT_PUBLIC_PLASMIC_TOKEN!,
     },
   ],
- 
-
-  // By default Plasmic will use the last published version of your project.
-  // For development, you can set preview to true, which will use the unpublished
-  // project, allowing you to see your designs without publishing.  Please
-  // only use this for development, as this is significantly slower.
-   preview: isDevelopment,
+  preview: isDevelopment,
 });
 
-// You can register any code components that you want to use here; see
-// https://docs.plasmic.app/learn/code-components-ref/
-// And configure your Plasmic project to use the host url pointing at
-// the /plasmic-host page of your nextjs app (for example,
-// http://localhost:3000/plasmic-host).  See
-// https://docs.plasmic.app/learn/app-hosting/#set-a-plasmic-project-to-use-your-app-host
-
-
-<<<<<<< HEAD
+// Register reveal components
 registerReveal(PLASMIC);
 
-=======
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
-
+// Register ScrollProvider
 PLASMIC.registerGlobalContext(ScrollProvider, {
   name: "ScrollProvider",
   providesData: true,
   props: {},
 });
 
-
-import EcwidStoreDiv from "./components/EcwidStoreDiv";
-
+// Register EcwidStoreDiv
 PLASMIC.registerComponent(EcwidStoreDiv, {
   name: "Ecwid Store Div",
   props: {
-className: "string",
-},
-});
-
-<<<<<<< HEAD
-
-
-import EcwidStoreDiv from "./components/EcwidStoreDiv";
-=======
-import EcwidStore from "./components/EcwidStore";
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
-
-PLASMIC.registerComponent(EcwidStoreDiv, {
-  name: "Ecwid Store Div",
-  props: {
-className: "string",
-<<<<<<< HEAD
-=======
-storeId: "string",
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
-},
-});
-
-
-<<<<<<< HEAD
-
-PLASMIC.registerComponent(FormUpload, {
-  name: "FormUpload",
-  props: {},
-  importPath: "@pages/plasmic",
-  importName: "FormUpload"
-})
-
-PLASMIC.registerComponent(Parallax, {
-  name: "Parallax",
-  props: {
-    children: "slot",
-className: 'string',
-    from: "number", 
-    to: "number",
-    stiffness: "number",
-    damping: "number",
+    className: "string",
+    storeId: "string",
   },
-  providesData: true,
 });
 
+// Register NextScript
 PLASMIC.registerComponent(NextScript, {
   name: "NextScript",
   props: {
@@ -116,60 +52,43 @@ PLASMIC.registerComponent(NextScript, {
   },
 });
 
-
-import FeatherIcon from "./components/FeatherIcon";
-
+// Register FeatherIcon
 PLASMIC.registerComponent(FeatherIcon, {
   name: "FeatherIcon",
   props: {
     name: 'string',
-    color: 'string',  // use string type for color
+    color: 'string',
     size: 'string',
     strokeWidth: 'number',
   },
 });
 
-import ReactMarkdownComponent from "./components/ReactMarkdown";
-
-PLASMIC.registerComponent(ReactMarkdownComponent, {
-  name: "ReactMarkdown",
-  props: {
-    children: {
-      type: "slot",
-    },
-  },
-});
-
-import CustomHead from './components/CustomHead';
-
+// Register CustomHead
 PLASMIC.registerComponent(CustomHead, {
   name: "Head Inject",
   props: {
     mycodehere: {
-displayName: "Other Code",
+      displayName: "Other Code",
       type: "code",
       lang: "html",
     },
     measurementId: {
-displayName: "Google Analytics ID",
+      displayName: "Google Analytics ID",
       type: "string",
     },
   },
 });
 
-=======
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
-import FramerMotionComponent from './components/FramerMotionComponent'; 
-
+// Register FramerMotion
 PLASMIC.registerComponent(FramerMotionComponent, {
   name: "Framer Motion",
   isAttachment: true,
   props: {
-  className: "string",
+    className: "string",
     children: 'slot',
-  duration: "number",
-  bounce: "number",
-  delay: "number",
+    duration: "number",
+    bounce: "number",
+    delay: "number",
     initialX: {
       displayName: "Initial X",
       type: "number",
@@ -189,21 +108,5 @@ PLASMIC.registerComponent(FramerMotionComponent, {
       min: 0,
       max: 1
     },
-
-},
-});
-
-import schemaArticle from './components/schema_article'; 
-
-PLASMIC.registerComponent(schemaArticle, {
-  name: "Article Schema/Markdown",
-  props: {
-      headline: 'string',
-  image: 'string',
-  authorType: 'string',
-  authorName: 'string',
-  publisherName: 'string',
-  publisherLogoUrl: 'string',
-  datePublished: 'string',
   },
 });

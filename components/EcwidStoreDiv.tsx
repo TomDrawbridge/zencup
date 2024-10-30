@@ -1,18 +1,12 @@
 'use client'
 
-<<<<<<< HEAD
-import React from 'react'
-=======
 import React, { useEffect } from 'react'
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
 
 interface EcwidStoreDivProps {
   className?: string
 }
 
 export default function EcwidStoreDiv({ className = '' }: EcwidStoreDivProps) {
-<<<<<<< HEAD
-=======
   useEffect(() => {
     if (typeof window.xProductBrowser !== 'undefined') {
       window.xProductBrowser(
@@ -25,6 +19,5 @@ export default function EcwidStoreDiv({ className = '' }: EcwidStoreDivProps) {
     }
   }, [])
 
->>>>>>> 139418f71c2555cdfe1a60548c56ffe7ecdefb10
   return <div id="ecStoreProductBrowser" className={className}></div>
 }
