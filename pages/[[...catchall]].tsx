@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 import { PLASMIC } from "@/plasmic-init";
 import Head from 'next/head'
 import * as allFetchDynamicPaths from '../utils/fetchDynamicPaths';
-import EcwidStore from '../components/EcwidStore'
 
 const { DYNAMIC_PATHS_SOURCE = 'default' } = process.env;
 const fetchDynamicPaths = (allFetchDynamicPaths as any)[`fetchDynamicPaths_${DYNAMIC_PATHS_SOURCE}`] || allFetchDynamicPaths.fetchDynamicPaths_default;
@@ -42,7 +41,6 @@ export default function PlasmicLoaderPage(props: {
       <Head>
         <link rel="icon" href={`/icons/${process.env.NEXT_PUBLIC_FAVICON}`} />
       </Head>
-      <EcwidStore storeId="109087793" />
       <PlasmicComponent component={pageMeta.displayName} />
     </PlasmicRootProvider>
   );
@@ -66,7 +64,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       pageParams={pageMeta.params}
       pageRoute={pageMeta.path}
     >
-<EcwidStore storeId="109087793" />
       <PlasmicComponent component={pageMeta.displayName} />
     </PlasmicRootProvider>
 
